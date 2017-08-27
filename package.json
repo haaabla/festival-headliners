@@ -1,0 +1,16 @@
+{
+  "name": "festival-headliners",
+  "version": "1.0.0",
+  "description": "Audio visual experience for festival lineup reveal",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nicolai Habla",
+  "license": "ISC"
+}
