@@ -3,6 +3,36 @@
     margin: 0 auto;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
 canvas {
-    background-color: red;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+#interface {
+    align-self: center;
+    position: absolute;
+    width: 95vw;
+    height: 90vh;
+    margin-top: 40px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#interface img {
+    object-fit: contain;
+}
+
+#logo {
+    height: 400px;
+    width: 100%;
 }

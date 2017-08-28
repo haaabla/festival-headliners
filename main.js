@@ -1,4 +1,13 @@
-console.log('mainjs <3?');
+var THREE, dataArray, analyser, getByteFrequencyData;
+
+var startExperience = false;
+var interface = $('#interface');
+
+interface.on('click', () => {
+    interface.fadeOut('slow');
+    startExperience = true;
+    changeTrack(track);
+});
 
 function init() {
     var scene = new THREE.Scene();
@@ -10,8 +19,12 @@ function init() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     // Scene Add
-    var cubeX = cube();
-    scene.add( cubeX );
+    scene.add( getMountain( 100, 0, 50 ) );
+    scene.add( getMountain( 100, 0, -100 ) );
+    scene.add( getMountain( 100, 0, -250 ) );
+    scene.add( getMountain( -100, 0, 50 ) );
+    scene.add( getMountain( -100, 0, -100 ) );
+    scene.add( getMountain( -100, 0, -250 ) );
 
     // Camera
     var camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 3000 );
@@ -22,9 +35,9 @@ function init() {
     cameraZPosition.name = 'cameraZPosition';
     cameraYRotation.name = 'cameraYRotation';
 
-    cameraZPosition.add(camera);
-    cameraYRotation.add(cameraZPosition);
-    scene.add( cameraYRotation ) ;
+    cameraZPosition.add( camera );
+    cameraYRotation.add( cameraZPosition );
+    scene.add( cameraYRotation );
 
     cameraZPosition.position.y = 3;
     cameraZPosition.position.z = 250;
@@ -76,27 +89,47 @@ function init() {
     plane1.name = 'plane';
 
     // Animate
-    animate( composer, scene, camera, controls );
+    getMountain( 100, 0, 50 ).then(mesh => {
+        animate( composer, scene, camera, controls );
+    });
 
     return scene;
 }
+
+var log = true;
 
 function animate( composer, scene, camera, controls ) {
     controls.update();
     composer.render( scene, camera );
 
-    // console.log(camera);
+    if (log === true) {
+        console.log( scene.children );
+        log = false
+    }
 
-    var cameraZ = scene.getObjectByName('cameraZPosition');
-    cameraZ.position.z -= 0.1;
+    if (startExperience) {
+        var cameraZ = scene.getObjectByName('cameraZPosition');
+        cameraZ.position.z -= 0.25;
 
-    var cubeMesh = scene.getObjectByName('cubie');
-    cubeMesh.rotation.x += 0.1;
-    cubeMesh.rotation.y += 0.1;
+        for (var i = 3; i <= (scene.children.length-1); i++) {
+            scene.children[i].geometry.vertices[78].y = 0.01 * dataArray[3];
+            scene.children[i].geometry.vertices[66].y = 0.005 * dataArray[7];
+            scene.children[i].geometry.vertices[50].y = 0.01 * dataArray[17];
+            scene.children[i].geometry.vertices[53].y = 0.005 * dataArray[10];
+            scene.children[i].geometry.vertices[14].y = 0.005 * dataArray[1];
+            scene.children[i].geometry.vertices[33].y = 0.01 * dataArray[3];
+            scene.children[i].geometry.vertices[20].y = 0.01 * dataArray[1];
+            scene.children[i].geometry.vertices[10].y = 0.01 * dataArray[8];
+            scene.children[i].geometry.verticesNeedUpdate = true;
+        }
+
+        analyser.getByteFrequencyData( dataArray );
+    }
+
 
     requestAnimationFrame(() => {
         animate( composer, scene, camera, controls )
     });
 }
 
-init();
+var scene = init();
