@@ -7,4 +7,4 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.listen(process.env.PORT || 8081, () => console.log('-:- LOCKED & LOADED -:-'));
+app.listen(process.env.PORT || 8080, () => console.log('-:- LOCKED & LOADED -:-'));

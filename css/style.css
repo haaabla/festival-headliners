@@ -13,6 +13,8 @@ canvas {
     left: 0;
     top: 0;
     z-index: 1;
+    /*width: 100% !important;
+    height: 100% !important;*/
 }
 
 #interface {
@@ -35,4 +37,44 @@ canvas {
 #logo {
     height: 400px;
     width: 100%;
+}
+
+#call-to-action {
+    visibility: hidden;
+    opacity: 0;
+    align-self: center;
+    position: absolute;
+    width: 95vw;
+    height: 90vh;
+    margin-top: 40px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+button {
+    font-family: 'Helvetica';
+    font-size: 3em;
+    height: 100px;
+    width: 400px;
+    color: white;
+    background-color: #FF04FC;
+    outline: none;
+    border: 0px solid #FF04FC;
+}
+
+button:hover {
+    color: #FF04FC;
+    background-color: white;
+    border: 5px solid #B8006B;
+}
+
+/******* SPLASH SCREEN *******/
+h1 {
+    font-size: 5em;
+    color: white;
+    text-align: center;
+    letter-spacing: 0.5;
 }

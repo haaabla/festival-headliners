@@ -1,10 +1,24 @@
-var playlist = ["synthwaveAudio","garrixAudio","valenAudio", "chainsmokersAudio", "ingrossoAudio"];
+function setupRenderer(){
+    // Render setup
+    var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl'), antialias: true });
+    renderer.setClearColor( 0x00f00 );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    return renderer;
+}
 
-var track = 0;
+var playlist = [ "synthwaveAudio","garrixAudio","valenAudio", "chainsmokersAudio", "ingrossoAudio" ];
 
-function changeTrack(track) {
+trackNumber = 0;
+
+function changeTrack( track ) {
+    console.log('changeTrack trackNumber: ', trackNumber);
+    if (trackNumber > 0) {
+        audio.pause();
+    }
     var ctx = new AudioContext();
     audio = document.getElementById( playlist[ track ] );
+    console.log('audio: ', audio);
     var audioSrc = ctx.createMediaElementSource( audio );
     analyser = ctx.createAnalyser();
     analyser.minDecibels = -90;
@@ -33,7 +47,7 @@ function getMountain( x, y, z ) {
             mesh.position.set( x, y, z );
 
             scene.add( mesh );
-            // mesh.name = 'mountain';
+            mesh.name = 'mountain';
 
             // wireframe
             var material = new THREE.MeshBasicMaterial({
@@ -45,17 +59,16 @@ function getMountain( x, y, z ) {
             mesh.position.set( x, y, z );
 
             scene.add( mesh );
-            // mesh.name = 'mountain-wf';
+            mesh.name = 'mountain-wf';
 
             resolve( mesh );
         });
     });
 }
 
-function getText( text ) {
+function getArtist( text, x, y, z ) {
     var loader = new THREE.FontLoader();
     loader.load('./assets/fonts/helvetiker_regular.typeface.json', font => {
-        console.log('getText SPAWNED:', text);
         var textGeo = new THREE.TextGeometry(text, {
             font: font,
             size: 3,
@@ -68,10 +81,41 @@ function getText( text ) {
 
         var textMat = new THREE.MeshLambertMaterial({ color: 0xFF00FF });
         var textMesh = new THREE.Mesh(textGeo, textMat);
-        textMesh.position.set(-12, 2, -25);
+        textMesh.position.set( x, y, z );
 
         textMesh.name = 'text';
 
         scene.add( textMesh );
     });
+}
+
+function getParticleSystem( particles, distance, z ) {
+    var particleGeo = new THREE.Geometry();
+    var particleMat = new THREE.PointsMaterial({
+        color: 'rgb(255,255,255)',
+        size: 1,
+        map: new THREE.TextureLoader().load('./assets/textures/particle.jpg'),
+        transparent: true,
+        opacity: 0.1,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+
+    var particleCount = particles;
+    var particleDistance = distance;
+
+    for (var i = 0; i < particleCount; i++) {
+        var posX = (Math.random() - 0.5) * particleDistance;
+        var posY = (Math.random() - 0.5) * particleDistance;
+        var posZ = (Math.random() - 0.5) * particleDistance;
+        var particle = new THREE.Vector3(posX, posY, posZ);
+
+        particleGeo.vertices.push(particle);
+    }
+
+    var particleSystem = new THREE.Points( particleGeo, particleMat );
+    particleSystem.position.set( 0, 0, z );
+    particleSystem.name = 'particleSystem';
+
+    return particleSystem;
 }
