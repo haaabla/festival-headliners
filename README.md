@@ -4,7 +4,7 @@
 SPICED Academy final one week project to create anything you wish
 
 ## Under the Hood
-- Three.js
+- WebGL (three.js)
 - Node.js
 - Blender 3D objects
 - Web Audio API
@@ -12,6 +12,8 @@ SPICED Academy final one week project to create anything you wish
 ## Solution
 Created an audio visual experience for a festival to use when revealing their lineups. The extended idea would be for people to be able to select their own top 5 favourite acts and share as to why <i>they are going</i>.
 
-http://headliners.surge.sh/
+I hope you enjoy as I definitely enjoyed working with three.js!
+
+http://festival-headliners.surge.sh/
 
 <img src="https://github.com/islanderupnorth/festival-headliners/blob/master/headliners.gif" alt="" style="width: 100%" />
